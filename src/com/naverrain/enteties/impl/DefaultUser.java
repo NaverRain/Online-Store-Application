@@ -1,14 +1,21 @@
 package com.naverrain.enteties.impl;
 
+import com.naverrain.annotations.Validate;
 import com.naverrain.enteties.User;
 
 public class DefaultUser implements User {
     private static int userCounter = 0;
 
     private int id;
+
+    @Validate(pattern = "[a-zA-Z]+")
     private String firstName;
+    @Validate(pattern = "[a-zA-Z]+")
     private String lastName;
+
     private String password;
+
+    @Validate(pattern = ".+@.+")
     private String email;
 
     {
