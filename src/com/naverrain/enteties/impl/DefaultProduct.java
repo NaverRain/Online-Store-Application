@@ -47,11 +47,9 @@ public class DefaultProduct implements Product {
 
     @Override
     public String toString() {
-        return "DefaultProduct{" +
-                "id=" + id +
+        return  "id=" + id +
                 ", productName='" + productName + '\'' +
                 ", categoryName='" + categoryName + '\'' +
-                ", price=" + price +
-                '}';
+                ", price=" + price;
     }
 }

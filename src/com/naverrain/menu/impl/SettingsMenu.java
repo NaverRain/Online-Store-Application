@@ -2,34 +2,34 @@ package com.naverrain.menu.impl;
 
 import com.naverrain.configs.ApplicationContext;
 import com.naverrain.menu.Menu;
+import com.naverrain.utis.language.SetLocaleLanguage;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class SettingsMenu implements Menu {
 
-    private static final String SETTINGS = "1. Change Password"
-                                            + System.lineSeparator()
-                                            + "2. Change Email";
-
     private ApplicationContext context;
-
+    private ResourceBundle rb;
     {
         context = ApplicationContext.getInstance();
     }
 
     @Override
     public void start() {
+        rb = SetLocaleLanguage.updateResourceBundle(RESOURCE_BUNDLE_NAME);
+
         Menu menu = null;
         mainLoop: while (true){
             printMenuHeader();
             if (context.getLoggedInUser() == null){
-                System.out.println("Please log in or create a new account to modify your settings.");
+                System.out.println(rb.getString("settings.log.in.msg"));
                 new MainMenu().start();
                 return;
             }
             else {
-                System.out.println(SETTINGS);
-                System.out.println("Please enter your option, or type \"Menu\" to navigate back to the main menu.");
+                System.out.println(rb.getString("settings.options"));
+                System.out.println(rb.getString("enter.option.msg"));
                 Scanner sc = new Scanner(System.in);
                 String userInput = sc.next();
 
@@ -47,7 +47,7 @@ public class SettingsMenu implements Menu {
                         menu = new ChangeEmailMenu();
                         break mainLoop;
                     default:
-                        System.out.println("Invalid input. Please choose option 1 or 2.");
+                        System.out.println(rb.getString("settings.invalid.input.msg"));
                         continue;
                 }
             }
@@ -59,6 +59,6 @@ public class SettingsMenu implements Menu {
 
     @Override
     public void printMenuHeader() {
-        System.out.println("===== SETTINGS MENU =====");
+        System.out.println(rb.getString("settings.header"));
     }
 }

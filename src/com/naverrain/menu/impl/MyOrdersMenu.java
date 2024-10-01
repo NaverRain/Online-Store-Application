@@ -5,14 +5,16 @@ import com.naverrain.enteties.Order;
 import com.naverrain.menu.Menu;
 import com.naverrain.services.OrderManagementService;
 import com.naverrain.services.impl.DefaultOrderManagementService;
+import com.naverrain.utis.language.SetLocaleLanguage;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MyOrdersMenu implements Menu {
 
     private ApplicationContext context;
     private OrderManagementService orderManagementService;
-
+    private ResourceBundle rb;
     {
         context = ApplicationContext.getInstance();
         orderManagementService = DefaultOrderManagementService.getInstance();
@@ -21,9 +23,10 @@ public class MyOrdersMenu implements Menu {
 
     @Override
     public void start() {
+        rb = SetLocaleLanguage.updateResourceBundle(RESOURCE_BUNDLE_NAME);
         printMenuHeader();
         if (context.getLoggedInUser() == null){
-            System.out.println("Please log in or create a new account to view your orders.");
+            System.out.println(rb.getString("log.in.msg"));
             new MainMenu().start();
             return;
         }
@@ -37,9 +40,7 @@ public class MyOrdersMenu implements Menu {
         List<Order> loggedInUserOrders = orderManagementService
                 .getOrdersByUserId(context.getLoggedInUser().getId());
         if (loggedInUserOrders == null || loggedInUserOrders.size() == 0) {
-            System.out.println(
-                    "Unfortunately, you don't have any orders yet. " +
-                            "Please navigate back to the main menu to place a new order.");
+            System.out.println(rb.getString("no.orders.msg"));
         } else {
             for (Order order : loggedInUserOrders) {
                 System.out.println(order);
@@ -49,6 +50,6 @@ public class MyOrdersMenu implements Menu {
 
     @Override
     public void printMenuHeader() {
-        System.out.println("===== MY ORDERS MENU =====");
+        System.out.println(rb.getString("my.orders.header"));
     }
 }

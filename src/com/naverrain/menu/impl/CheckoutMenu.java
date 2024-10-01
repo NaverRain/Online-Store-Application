@@ -6,13 +6,16 @@ import com.naverrain.enteties.impl.DefaultOrder;
 import com.naverrain.menu.Menu;
 import com.naverrain.services.OrderManagementService;
 import com.naverrain.services.impl.DefaultOrderManagementService;
+import com.naverrain.utis.language.SetLocaleLanguage;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class CheckoutMenu implements Menu {
 
     private ApplicationContext context;
     private OrderManagementService orderManagementService;
+    private ResourceBundle rb;
     {
         context = ApplicationContext.getInstance();
         orderManagementService = DefaultOrderManagementService.getInstance();
@@ -22,6 +25,8 @@ public class CheckoutMenu implements Menu {
 
     @Override
     public void start() {
+        rb = SetLocaleLanguage.updateResourceBundle(RESOURCE_BUNDLE_NAME);
+
         while (true) {
             printMenuHeader();
             Scanner sc = new Scanner(System.in);
@@ -34,19 +39,19 @@ public class CheckoutMenu implements Menu {
             break;
         }
 
-        System.out.println("Thank you for your purchase! A confirmation email with delivery details has been sent to you.");
+        System.out.println(rb.getString("thank.you.msg"));
         new MainMenu().start();
     }
 
     private boolean createOrder(String creditCardNumber) {
         if (context.getSessionCart().getProducts().isEmpty()) {
-            System.out.println("No products in the cart. Please add products before proceeding to checkout.");
+            System.out.println(rb.getString("no.products.msg"));
             return false;
         }
 
         Order order = new DefaultOrder();
         if (!order.isCreditCardNumberValid(creditCardNumber)) {
-            System.out.println("Invalid credit card number. Please check and try again.");
+            System.out.println(rb.getString("invalid.credit.card.number.msg"));
             return false;
         }
 
@@ -59,8 +64,7 @@ public class CheckoutMenu implements Menu {
 
     @Override
     public void printMenuHeader() {
-        System.out.println("===== CHECKOUT MENU =====");
-        System.out.println("Enter your credit card number " +
-                "and press enter to confirm purchase.");
+        System.out.println(rb.getString("checkout.menu.header"));
+        System.out.println(rb.getString("enter.credit.card.number.cta"));
     }
 }

@@ -5,9 +5,13 @@ import com.naverrain.enteties.User;
 import com.naverrain.enteties.impl.DefaultCart;
 import com.naverrain.menu.Menu;
 
+import java.util.Locale;
+
 public class ApplicationContext {
 
     private static ApplicationContext instance;
+
+    private Locale currentLocale = Locale.getDefault();
 
     private User loggedInUser;
     private Menu mainMenu;
@@ -49,4 +53,11 @@ public class ApplicationContext {
         return this.sessionCart;
     }
 
+    public Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
+    public void setCurrentLocale(Locale locale) {
+        this.currentLocale = locale;
+    }
 }

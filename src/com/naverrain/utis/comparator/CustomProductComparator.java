@@ -1,4 +1,4 @@
-package com.naverrain.utis;
+package com.naverrain.utis.comparator;
 
 import com.naverrain.enteties.Product;
 

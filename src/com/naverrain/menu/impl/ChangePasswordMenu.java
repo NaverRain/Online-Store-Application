@@ -2,11 +2,14 @@ package com.naverrain.menu.impl;
 
 import com.naverrain.configs.ApplicationContext;
 import com.naverrain.menu.Menu;
+import com.naverrain.utis.language.SetLocaleLanguage;
 
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class ChangePasswordMenu implements Menu {
 
+    private ResourceBundle rb;
     private ApplicationContext context;
     {
         context = ApplicationContext.getInstance();
@@ -14,18 +17,20 @@ public class ChangePasswordMenu implements Menu {
 
     @Override
     public void start() {
+        rb = SetLocaleLanguage.updateResourceBundle(RESOURCE_BUNDLE_NAME);
+
         printMenuHeader();
         Scanner sc = new Scanner(System.in);
         String userInput = sc.nextLine();
         context.getLoggedInUser().setPassword(userInput);
-        System.out.println("Your password has been changed successfully!");
+        System.out.println(rb.getString("password.changed.msg"));
 
         new MainMenu().start();
     }
 
     @Override
     public void printMenuHeader() {
-        System.out.println("===== CHANGE PASSWORD MENU =====");
-        System.out.print("Enter a new password: ");
+        System.out.println(rb.getString("change.password.header"));
+        System.out.print(rb.getString("enter.new.password.cta"));
     }
 }
