@@ -66,6 +66,10 @@ public class MainMenu implements Menu {
                         menuToNavigate = new CustomerListMenu();
                         break mainLoop;
                     case 7:
+
+                        menuToNavigate = new ResetPasswordMenu();
+                        break mainLoop;
+                    case 8:
                         menuToNavigate = new ChangeLanguageMenu();
                         break mainLoop;
                     default:
