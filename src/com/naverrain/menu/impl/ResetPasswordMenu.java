@@ -2,8 +2,8 @@ package com.naverrain.menu.impl;
 
 import com.naverrain.enteties.User;
 import com.naverrain.menu.Menu;
-import com.naverrain.services.ResetPasswordService;
 import com.naverrain.services.UserManagementService;
+import com.naverrain.services.impl.DefaultUserManagementService;
 import com.naverrain.utis.language.SetLocaleLanguage;
 
 import java.util.ResourceBundle;
@@ -12,9 +12,12 @@ import java.util.concurrent.CompletableFuture;
 
 public class ResetPasswordMenu implements Menu {
 
-    private ResetPasswordService resetPasswordService;
     private UserManagementService userManagementService;
     private ResourceBundle rb;
+
+    {
+        userManagementService = DefaultUserManagementService.getInstance();
+    }
 
     @Override
     public void start() {
@@ -28,7 +31,7 @@ public class ResetPasswordMenu implements Menu {
         System.out.println(rb.getString("password.send.to.email.msg"));
         CompletableFuture.runAsync(() -> {
             User user = userManagementService.getUserByEmail(userInput);
-            resetPasswordService.resetPassword(user);
+            userManagementService.resetPasswordForUser(user);
         });
 
         new MainMenu().start();

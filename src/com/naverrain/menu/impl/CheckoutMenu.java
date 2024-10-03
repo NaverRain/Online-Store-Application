@@ -1,11 +1,11 @@
 package com.naverrain.menu.impl;
 
 import com.naverrain.configs.ApplicationContext;
-import com.naverrain.enteties.Order;
-import com.naverrain.enteties.impl.DefaultOrder;
+import com.naverrain.enteties.Purchase;
+import com.naverrain.enteties.impl.DefaultPurchase;
 import com.naverrain.menu.Menu;
-import com.naverrain.services.OrderManagementService;
-import com.naverrain.services.impl.DefaultOrderManagementService;
+import com.naverrain.services.PurchaseManagementService;
+import com.naverrain.services.impl.DefaultPurchaseManagementService;
 import com.naverrain.utis.language.SetLocaleLanguage;
 
 import java.util.ResourceBundle;
@@ -14,11 +14,11 @@ import java.util.Scanner;
 public class CheckoutMenu implements Menu {
 
     private ApplicationContext context;
-    private OrderManagementService orderManagementService;
+    private PurchaseManagementService purchaseManagementService;
     private ResourceBundle rb;
     {
         context = ApplicationContext.getInstance();
-        orderManagementService = DefaultOrderManagementService.getInstance();
+        purchaseManagementService = DefaultPurchaseManagementService.getInstance();
     }
 
 
@@ -49,16 +49,16 @@ public class CheckoutMenu implements Menu {
             return false;
         }
 
-        Order order = new DefaultOrder();
-        if (!order.isCreditCardNumberValid(creditCardNumber)) {
+        Purchase purchase = new DefaultPurchase();
+        if (!purchase.isCreditCardNumberValid(creditCardNumber)) {
             System.out.println(rb.getString("invalid.credit.card.number.msg"));
             return false;
         }
 
-        order.setCreditCardNumber(creditCardNumber);
-        order.setProducts(context.getSessionCart().getProducts());
-        order.setCustomerId(context.getLoggedInUser().getId());
-        orderManagementService.addOrder(order);
+        purchase.setCreditCardNumber(creditCardNumber);
+        purchase.setProducts(context.getSessionCart().getProducts());
+        purchase.setCustomerId(context.getLoggedInUser().getId());
+        purchaseManagementService.addPurchase(purchase);
         return true;
     }
 

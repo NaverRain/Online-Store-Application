@@ -2,6 +2,8 @@ package com.naverrain.menu.impl;
 
 import com.naverrain.configs.ApplicationContext;
 import com.naverrain.menu.Menu;
+import com.naverrain.services.PurchaseManagementService;
+import com.naverrain.services.impl.MySqlPurchaseManagementService;
 import com.naverrain.utis.language.SetLocaleLanguage;
 
 import java.util.Locale;

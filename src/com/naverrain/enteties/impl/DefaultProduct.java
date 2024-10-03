@@ -25,9 +25,17 @@ public class DefaultProduct implements Product {
         return this.id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String getProductName() {
         return this.productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     @Override
@@ -35,9 +43,13 @@ public class DefaultProduct implements Product {
         return this.categoryName;
     }
 
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public double getPrice() {
-        return this.price;
+        return price;
     }
 
     @Override

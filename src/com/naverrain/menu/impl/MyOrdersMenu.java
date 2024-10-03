@@ -1,10 +1,10 @@
 package com.naverrain.menu.impl;
 
 import com.naverrain.configs.ApplicationContext;
-import com.naverrain.enteties.Order;
+import com.naverrain.enteties.Purchase;
 import com.naverrain.menu.Menu;
-import com.naverrain.services.OrderManagementService;
-import com.naverrain.services.impl.DefaultOrderManagementService;
+import com.naverrain.services.PurchaseManagementService;
+import com.naverrain.services.impl.DefaultPurchaseManagementService;
 import com.naverrain.utis.language.SetLocaleLanguage;
 
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.ResourceBundle;
 public class MyOrdersMenu implements Menu {
 
     private ApplicationContext context;
-    private OrderManagementService orderManagementService;
+    private PurchaseManagementService purchaseManagementService;
     private ResourceBundle rb;
     {
         context = ApplicationContext.getInstance();
-        orderManagementService = DefaultOrderManagementService.getInstance();
+        purchaseManagementService = DefaultPurchaseManagementService.getInstance();
     }
 
 
@@ -37,13 +37,13 @@ public class MyOrdersMenu implements Menu {
     }
 
     private void printOrdersToConsole(){
-        List<Order> loggedInUserOrders = orderManagementService
-                .getOrdersByUserId(context.getLoggedInUser().getId());
-        if (loggedInUserOrders == null || loggedInUserOrders.size() == 0) {
+        List<Purchase> loggedInUserPurchases = purchaseManagementService
+                .getPurchasesByUserId(context.getLoggedInUser().getId());
+        if (loggedInUserPurchases == null || loggedInUserPurchases.size() == 0) {
             System.out.println(rb.getString("no.orders.msg"));
         } else {
-            for (Order order : loggedInUserOrders) {
-                System.out.println(order);
+            for (Purchase purchase : loggedInUserPurchases) {
+                System.out.println(purchase);
             }
         }
     }
